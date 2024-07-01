@@ -1,0 +1,5 @@
+/assets/dist/
+/assets/output.css
+/vendor/
+/pkg/
+/docs/swagger.*

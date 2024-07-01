@@ -1,0 +1,14 @@
+[build]
+  bin               = "./tmp/main"
+  cmd               = "make build-server"
+  delay             = 1000
+  exclude_dir       = ["docs", "testdata", "tmp", "vendor"]
+  exclude_file      = ["assets/output.css", "screenshots.js"]
+  exclude_regex     = ["_test.go"]
+  exclude_unchanged = false
+  include_ext       = ["css", "go", "html", "js", "json", "tmpl", "tpl"]
+  pre_cmd           = ["make build-tw"]
+  stop_on_error     = false
+
+[screen]
+  clear_on_rebuild = false
