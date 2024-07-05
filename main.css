@@ -8,43 +8,16 @@
     }
   }
 
-  .map-tiles,
-  .leaflet-tooltip,
-  .leaflet-control {
-    @apply dark:saturate-0 dark:invert dark:contrast-[0.80] dark:brightness-[0.85];
-  }
-
-  table.sortable
-    th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(
-      .sorttable_nosort
-    ):after {
-    content: " \25B4\25BE";
-  }
-
   body {
     @apply md:px-20;
     @apply bg-neutral-100 text-zinc-900;
     @apply dark:bg-neutral-900 dark:text-zinc-100;
   }
 
-  ol {
-    @apply list-decimal list-inside my-5;
-  }
-
-  ul {
-    @apply list-disc list-inside my-5;
-  }
-
-  button[type="submit"],
-  textarea,
-  select,
   input {
     @apply rounded-xl px-6 py-2 border;
     @apply bg-zinc-100 border-zinc-300 hover:border-amber-500 placeholder:text-slate-500;
     @apply dark:bg-zinc-900 dark:border-zinc-700 dark:hover:border-amber-500 dark:placeholder:text-slate-500;
-  }
-  button[type="submit"] {
-    @apply font-bold;
   }
 
   h2 {
@@ -52,6 +25,7 @@
     @apply text-zinc-800;
     @apply dark:text-zinc-200;
   }
+
   h3 {
     @apply text-base md:text-xl mb-5;
     @apply text-zinc-800;
@@ -161,7 +135,14 @@
   }
   .notice,
   .alert {
-    @apply px-4 py-3 m-5 rounded-md relative;
+    @apply px-4 py-3 m-5 rounded-md relative max-h-48 overflow-hidden;
+  }
+  .vanish {
+    @apply transition-all duration-1000 max-h-0 py-0 my-0 opacity-0;
+  }
+
+  #notifications {
+    @apply absolute right-0 md:right-24 top-12 w-[300px] sm:w-[500px];
   }
 
   table {
@@ -198,7 +179,7 @@
     }
   }
 
-  .workout-info {
+  .event-info {
     th,
     td {
       @apply px-2;
@@ -208,74 +189,29 @@
     }
   }
 
-  .workout-tile-info {
-    @apply border rounded-lg py-1 px-2 text-xs font-mono;
-  }
-
-  .modal {
-    @apply hidden fixed inset-0 overflow-y-auto h-full w-full px-4 z-[3000];
-    @apply bg-gray-100 bg-opacity-80;
-    @apply dark:bg-gray-900 dark:bg-opacity-60;
-    .window {
-      @apply relative top-40 mx-auto shadow-xl rounded-3xl max-w-md;
-      @apply bg-neutral-100;
-      @apply dark:bg-neutral-900;
-
-      button.close-modal {
-        a {
-          @apply bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex;
-          @apply text-gray-600 hover:bg-gray-800 hover:text-gray-100;
-          @apply dark:text-gray-400 dark:hover:bg-gray-200 dark:hover:text-gray-900;
-        }
-      }
-
-      .modal-content {
-        @apply p-6 pt-0 text-center;
-        h3 {
-          @apply text-xl font-normal mt-3 mb-10;
-          @apply text-zinc-900;
-          @apply dark:text-zinc-100;
-        }
-        button {
-          @apply focus:ring-4 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center;
-        }
-        button.confirm {
-          @apply mr-2;
-          @apply text-white bg-red-600 hover:bg-red-800 focus:ring-red-300;
-          @apply dark:text-black dark:bg-red-400 dark:hover:bg-red-200 dark:focus:ring-red-700;
-        }
-        button.cancel {
-          @apply border;
-          @apply text-gray-900 bg-white hover:bg-gray-100 focus:ring-cyan-200 border-gray-200;
-          @apply dark:text-gray-100 dark:bg-black dark:hover:bg-gray-900 dark:focus:ring-cyan-800 dark:border-gray-800;
-        }
-      }
-    }
-  }
-
   .selectable-pill {
-    @apply user-pill;
+    @apply category-pill;
     @apply hover:brightness-125;
     @apply bg-red-400 peer-checked:bg-green-400;
     @apply dark:bg-red-800 dark:peer-checked:bg-green-800;
   }
 
-  .user-pill {
+  .category-pill {
     @apply inline-block rounded-full m-1 min-w-[150px] py-2 px-5 border text-center;
     @apply hover:brightness-110;
-    @apply bg-neutral-300 border-neutral-500;
-    @apply dark:bg-neutral-700 dark:border-neutral-500;
+    @apply bg-green-600 border-green-500;
   }
-  .workout-item {
-    @apply rounded-xl py-2 px-5 border;
+  .date-pill {
+    @apply inline-block rounded-full m-1 w-[200px] py-2 px-5 border text-center;
     @apply hover:brightness-110;
-    @apply bg-neutral-300 border-neutral-500;
-    @apply dark:bg-neutral-700 dark:border-neutral-500;
+    @apply bg-yellow-600 border-yellow-500;
+  }
 
-    .meta {
-      @apply text-neutral-600;
-      @apply dark:text-neutral-400;
-    }
+  #drop_zone {
+    @apply rounded border border-l-2 bg-blue-900 border-blue-500 w-80 py-2 text-xl text-center;
+  }
+  #drop_zone.highlight {
+    @apply bg-blue-600 brightness-110;
   }
 }
 

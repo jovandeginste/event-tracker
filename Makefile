@@ -6,10 +6,6 @@ GIT_COMMIT ?= $(shell git rev-parse HEAD)
 BUILD_TIME ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 OUTPUT_FILE ?= tmp/main
 
-I18N_LANGUAGES ?= nl de fr
-LANG_TO_GENERATE = $(patsubst generate-translation-%,%,$@)
-THEME_SCREENSHOT_WIDTH ?= 1200
-THEME_SCREENSHOT_HEIGHT ?= 900
 
 .PHONY: all clean test build screenshots
 
@@ -33,7 +29,7 @@ build-server:
 		-o $(OUTPUT_FILE) ./
 
 build-docker:
-	docker build -t $(NAME)
+	docker build -t $(NAME) \
 		--build-arg BUILD_TIME="$(BUILD_TIME)" \
 		--build-arg GIT_COMMIT="$(GIT_COMMIT)" \
 		--build-arg GIT_REF="$(GIT_REF)" \
@@ -58,20 +54,13 @@ build-dist: clean-dist
 	cp -v ./node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
 	cp -R ./node_modules/@fortawesome/fontawesome-free/ ./assets/dist/fontawesome/
 	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
+	cp -v ./node_modules/htmx.org/dist/ext/client-side-templates.js ./assets/dist/
+	cp -v ./node_modules/htmx.org/dist/ext/response-targets.js ./assets/dist/
+	cp -v ./node_modules/mustache/mustache.min.js ./assets/dist/
 
 
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
-
-generate-messages:
-	xspreak -p ./translations/ -f json --template-keyword "i18n" -t "views/**/*.html"
-
-generate-translations: $(patsubst %,generate-translation-%, $(I18N_LANGUAGES))
-
-$(patsubst %,generate-translation-%, $(I18N_LANGUAGES)):
-	xspreak merge -i translations/messages.json \
-		-o translations/${LANG_TO_GENERATE}.json -l ${LANG_TO_GENERATE}
-	prettier --write translations/${LANG_TO_GENERATE}.json
 
 serve:
 	$(OUTPUT_FILE)
@@ -84,11 +73,6 @@ test-assets:
 test-go:
 	go test -short -count 1 -mod vendor -covermode=atomic ./...
 	golangci-lint run --allow-parallel-runners
-
-screenshots: generate-screenshots screenshots-theme screenshots-responsive
-
-generate-screenshots:
-	K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js
 
 go-cover:
 	go test -short -count 1 -mod vendor -covermode=atomic -coverprofile=coverage.out ./...

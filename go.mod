@@ -3,18 +3,20 @@ module github.com/jovandeginste/event-tracker
 go 1.22.4
 
 require (
+	github.com/DusanKasan/parsemail v1.2.0
 	github.com/bounoable/ical v0.4.3
 	github.com/fsouza/slognil v0.4.0
 	github.com/glebarez/sqlite v1.11.0
 	github.com/labstack/echo/v4 v4.12.0
-	github.com/mattn/go-isatty v0.0.20
 	github.com/orandin/slog-gorm v1.3.2
+	github.com/paulrosania/go-charset v0.0.0-20190326053356-55c9d7a5834c
 	github.com/samber/slog-echo v1.14.2
-	github.com/sirupsen/logrus v1.9.3
+	github.com/stretchr/testify v1.9.0
 	gorm.io/gorm v1.25.10
 )
 
 require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/glebarez/go-sqlite v1.21.2 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
@@ -23,6 +25,8 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/samber/lo v1.38.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
@@ -35,6 +39,7 @@ require (
 	golang.org/x/sys v0.19.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 	modernc.org/libc v1.22.5 // indirect
 	modernc.org/mathutil v1.5.0 // indirect
 	modernc.org/memory v1.5.0 // indirect
