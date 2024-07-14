@@ -30,8 +30,10 @@ func (a *App) configureRoutes() {
 	publicGroup := e.Group("")
 	publicGroup.StaticFS("/", a.Assets)
 
-	publicGroup.GET("/calendar", a.CalendarHandler).Name = "events-calendar"
 	publicGroup.GET("/version", a.VersionHandler).Name = "version"
+
+	feedsGroup := e.Group("/feed")
+	feedsGroup.GET("/calendar", a.CalendarHandler).Name = "feed-calendar"
 
 	eventsGroup := e.Group("/events")
 	eventsGroup.GET("", a.JSONHandler).Name = "events-json"
