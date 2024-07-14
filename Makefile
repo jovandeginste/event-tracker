@@ -51,7 +51,6 @@ clean-dist:
 
 build-dist: clean-dist
 	mkdir -p ./assets/dist/images
-	cp -v ./node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
 	cp -R ./node_modules/@fortawesome/fontawesome-free/ ./assets/dist/fontawesome/
 	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
 	cp -v ./node_modules/htmx.org/dist/ext/client-side-templates.js ./assets/dist/
