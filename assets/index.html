@@ -191,7 +191,18 @@
     </tr>
     <tr class="collapse">
       <td colspan="4">
-        <pre>{{ Summary }}</pre>
+        <ul>
+          <li>Summary: {{ Summary }}</li>
+          <li>Description: {{ Event.Description }}</li>
+          <li>Time: {{ TimeRange }}</li>
+          <li>Categories: {{ Categories }}</li>
+        </ul>
+
+        <ul>
+          Properties: {{ #Event.Properties }}
+          <li>{{ Name }}: {{ Value }}</li>
+          {{ /Event.Properties }}
+        </ul>
       </td>
     </tr>
     {{/results}}

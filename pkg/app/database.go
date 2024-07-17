@@ -16,7 +16,7 @@ import (
 const thresholdSlowQueries = 100 * time.Millisecond
 
 var filteredProperties = []string{
-	"LOCATION", "SUMMARY", "DESCRIPTION",
+	"LOCATION", "SUMMARY", "DESCRIPTION", "ORGANIZER", "ATTENDEE",
 }
 
 type databaseConfig struct {
@@ -102,7 +102,7 @@ func (a *App) AllEvents() (Events, error) {
 		return nil, err
 	}
 
-	e.CalculateDates()
+	e.CalculateAttributes()
 
 	return e, nil
 }

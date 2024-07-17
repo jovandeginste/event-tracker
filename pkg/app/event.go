@@ -30,10 +30,14 @@ type Event struct {
 
 type Events []*Event
 
-func (e *Events) CalculateDates() {
+func (e *Events) CalculateAttributes() {
 	for i := range *e {
-		(*e)[i].CalculateDates()
+		(*e)[i].CalculateAttributes()
 	}
+}
+
+func (e *Event) CalculateAttributes() {
+	e.CalculateDates()
 }
 
 func (e *Event) CalculateDates() {
