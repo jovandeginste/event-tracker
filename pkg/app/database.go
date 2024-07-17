@@ -157,11 +157,19 @@ func (a *App) SearchEvents(t string) (Events, error) {
 }
 
 func (e *Event) Matches(term string) bool {
+	term = strings.ToLower(term)
+
 	for _, p := range filteredProperties {
 		if l, ok := e.Property(p); ok {
 			if strings.Contains(strings.ToLower(l.Value), term) {
 				return true
 			}
+		}
+	}
+
+	for _, c := range e.Categories {
+		if strings.Contains(strings.ToLower(c), term) {
+			return true
 		}
 	}
 

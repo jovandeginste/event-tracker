@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
@@ -25,6 +26,31 @@ func (a *App) SearchEventsHandler(c echo.Context) error {
 	resp.Results = events
 
 	resp.ParseErrors()
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+func (a *App) EventsHandler(c echo.Context) error {
+	type CalendarEvent struct {
+		Title string    `json:"title"`
+		Start time.Time `json:"start"`
+		End   time.Time `json:"end"`
+	}
+
+	events, err := a.AllEvents()
+	if err != nil {
+		return err
+	}
+
+	resp := []CalendarEvent{}
+
+	for _, e := range events {
+		resp = append(resp, CalendarEvent{
+			Title: e.Summary,
+			Start: e.Start,
+			End:   e.End,
+		})
+	}
 
 	return c.JSON(http.StatusOK, resp)
 }

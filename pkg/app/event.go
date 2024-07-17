@@ -8,6 +8,7 @@ import (
 
 	"github.com/bounoable/ical"
 	"github.com/bounoable/ical/parse"
+	"github.com/dustin/go-humanize"
 	"gorm.io/gorm"
 )
 
@@ -21,8 +22,10 @@ type Event struct {
 	Categories []string    `gorm:"serializer:json"`
 	Event      parse.Event `gorm:"serializer:json"`
 
-	HumanStart string `gorm:"-"`
-	HumanEnd   string `gorm:"-"`
+	HumanStart     string `gorm:"-"`
+	HumanEnd       string `gorm:"-"`
+	HumanTimeRange string `gorm:"-"`
+	TimeRange      string `gorm:"-"`
 }
 
 type Events []*Event
@@ -34,8 +37,21 @@ func (e *Events) CalculateDates() {
 }
 
 func (e *Event) CalculateDates() {
-	e.HumanStart = niceDate(e.Start)
-	e.HumanEnd = niceDate(e.End)
+	e.HumanStart = humanize.Time(e.Start)
+	e.HumanEnd = humanize.Time(e.End)
+
+	if e.HumanEnd == e.HumanStart ||
+		e.End.Sub(e.Start).Hours() == 24 {
+		e.HumanTimeRange = e.HumanStart
+	} else {
+		e.HumanTimeRange = fmt.Sprintf("%s - %s", e.HumanStart, e.HumanEnd)
+	}
+
+	if e.End.Sub(e.Start).Hours() == 24 {
+		e.TimeRange = niceDate(e.Start)
+	} else {
+		e.TimeRange = fmt.Sprintf("%s - %s", niceDate(e.Start), niceDate(e.End))
+	}
 }
 
 func niceDate(t time.Time) string {

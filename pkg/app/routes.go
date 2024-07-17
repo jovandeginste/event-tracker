@@ -34,9 +34,10 @@ func (a *App) configureRoutes() {
 
 	feedsGroup := e.Group("/feed")
 	feedsGroup.GET("/calendar", a.CalendarHandler).Name = "feed-calendar"
+	feedsGroup.GET("/json", a.JSONHandler).Name = "feed-json"
+	feedsGroup.GET("/events", a.EventsHandler).Name = "feed-events"
 
 	eventsGroup := e.Group("/events")
-	eventsGroup.GET("", a.JSONHandler).Name = "events-json"
 	eventsGroup.POST("", a.AddEventsHandler).Name = "events-create"
 	eventsGroup.GET("/search", a.SearchEventsHandler).Name = "events-search"
 	eventsGroup.GET("/:id/json", a.ShowEventHandler).Name = "event-show"

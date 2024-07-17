@@ -189,22 +189,17 @@
     }
   }
 
-  .selectable-pill {
-    @apply category-pill;
-    @apply hover:brightness-125;
-    @apply bg-red-400 peer-checked:bg-green-400;
-    @apply dark:bg-red-800 dark:peer-checked:bg-green-800;
-  }
-
-  .category-pill {
-    @apply inline-block rounded-full m-1 min-w-[150px] py-2 px-5 border text-center;
+  .pill {
+    @apply inline-block rounded-full mx-1 min-w-[150px] py-1 px-5 border text-center;
     @apply hover:brightness-110;
+  }
+  .category-pill {
+    @apply pill;
     @apply bg-green-600 border-green-500;
   }
-  .date-pill {
-    @apply inline-block rounded-full m-1 w-[200px] py-2 px-5 border text-center;
-    @apply hover:brightness-110;
-    @apply bg-yellow-600 border-yellow-500;
+  .selectable-pill {
+    @apply pill;
+    @apply hover:brightness-125;
   }
 
   #drop_zone {

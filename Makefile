@@ -56,6 +56,7 @@ build-dist: clean-dist
 	cp -v ./node_modules/htmx.org/dist/ext/client-side-templates.js ./assets/dist/
 	cp -v ./node_modules/htmx.org/dist/ext/response-targets.js ./assets/dist/
 	cp -v ./node_modules/mustache/mustache.min.js ./assets/dist/
+	cp -v ./node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
 
 
 watch-tw:
