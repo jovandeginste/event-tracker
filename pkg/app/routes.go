@@ -43,7 +43,8 @@ func (a *App) configureRoutes() {
 	eventsGroup.GET("/:id/json", a.ShowEventHandler).Name = "event-show"
 	eventsGroup.GET("/:id/ical", a.ShowIcalEventHandler).Name = "event-ical"
 	eventsGroup.DELETE("/:id", a.DeleteEventHandler).Name = "event-delete"
-	eventsGroup.POST("/:id/category-add", a.AddCategoryHandler).Name = "event-category-add"
+	eventsGroup.POST("/:id/category-add/:category", a.AddCategoryHandler).Name = "event-category-add"
+	eventsGroup.POST("/:id/category-add", a.AddCategoryHandler).Name = "event-category-add-form"
 	eventsGroup.POST("/:id/category-rm/:category", a.RemoveCategoryHandler).Name = "event-category-rm"
 
 	a.echo = e

@@ -200,6 +200,10 @@
     @apply pill;
     @apply bg-green-600 border-green-500;
   }
+  .ai-category-pill {
+    @apply pill;
+    @apply bg-yellow-600 border-yellow-500;
+  }
   .selectable-pill {
     @apply pill;
     @apply hover:brightness-125;

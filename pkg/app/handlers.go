@@ -1,6 +1,7 @@
 package app
 
 import (
+	"cmp"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -177,7 +178,10 @@ func (a *App) AddCategoryHandler(c echo.Context) error {
 		resp.AddError(err)
 	}
 
-	cat := c.FormValue("category")
+	cat := cmp.Or(
+		c.Param("category"),
+		c.FormValue("category"),
+	)
 
 	if resp.NoErrors() {
 		event, err = a.GetEvent(uint(id))

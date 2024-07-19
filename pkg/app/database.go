@@ -104,6 +104,12 @@ func (a *App) AllEvents() (Events, error) {
 
 	e.CalculateAttributes()
 
+	for _, ev := range e {
+		if err := a.AddAITags(ev); err != nil {
+			return e, err
+		}
+	}
+
 	return e, nil
 }
 
@@ -154,6 +160,24 @@ func (a *App) SearchEvents(t string) (Events, error) {
 	}
 
 	return filteredEvents, nil
+}
+
+func (a *App) AllCategories() ([]string, error) {
+	evs := Events{}
+	if err := a.DB().Order("start asc").Find(&evs).Error; err != nil {
+		return nil, err
+	}
+
+	var categories []string
+
+	for _, e := range evs {
+		categories = append(categories, e.Categories...)
+	}
+
+	slices.Sort(categories)
+	categories = slices.Compact(categories)
+
+	return categories, nil
 }
 
 func (e *Event) Matches(term string) bool {

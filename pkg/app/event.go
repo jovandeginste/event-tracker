@@ -16,11 +16,12 @@ const categoryProperty = "CATEGORIES"
 
 type Event struct {
 	gorm.Model
-	Summary    string      `gorm:"not null;uniqueIndex:idx_event"`
-	Start      time.Time   `gorm:"not null;uniqueIndex:idx_event"`
-	End        time.Time   `gorm:"not null;uniqueIndex:idx_event"`
-	Categories []string    `gorm:"serializer:json"`
-	Event      parse.Event `gorm:"serializer:json"`
+	Summary      string      `gorm:"not null;uniqueIndex:idx_event"`
+	Start        time.Time   `gorm:"not null;uniqueIndex:idx_event"`
+	End          time.Time   `gorm:"not null;uniqueIndex:idx_event"`
+	Categories   []string    `gorm:"serializer:json"`
+	AICategories []string    `gorm:"serializer:json"`
+	Event        parse.Event `gorm:"serializer:json"`
 
 	HumanStart     string `gorm:"-"`
 	HumanEnd       string `gorm:"-"`
@@ -30,6 +31,26 @@ type Event struct {
 
 type Events []*Event
 
+func (e *Event) Description() string {
+	if e == nil {
+		return ""
+	}
+
+	return e.Event.Description
+}
+
+func (e *Event) Location() string {
+	if e == nil {
+		return ""
+	}
+
+	if r, ok := e.Event.Property("LOCATION"); ok {
+		return r.Value
+	}
+
+	return ""
+}
+
 func (e *Events) CalculateAttributes() {
 	for i := range *e {
 		(*e)[i].CalculateAttributes()
@@ -38,6 +59,10 @@ func (e *Events) CalculateAttributes() {
 
 func (e *Event) CalculateAttributes() {
 	e.CalculateDates()
+
+	e.AICategories = slices.DeleteFunc(e.AICategories, func(c string) bool {
+		return slices.Contains(e.Categories, c)
+	})
 }
 
 func (e *Event) CalculateDates() {

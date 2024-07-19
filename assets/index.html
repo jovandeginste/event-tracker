@@ -129,11 +129,12 @@
   </template>
   <template id="event-template">
     {{#results}}
-    <tr
-      class="border-t border-gray-300"
-      onclick="this.nextElementSibling.classList.toggle('collapse');"
-    >
-      <td><span>{{ Summary }}</span></td>
+    <tr class="border-t border-gray-300">
+      <td
+        onclick="this.parentElement.nextElementSibling.classList.toggle('collapse');"
+      >
+        <span>{{ Summary }}</span>
+      </td>
       <td title="{{ TimeRange }}" class="font-mono whitespace-nowrap">
         <span class="icon-baseline icon-before icon-regular icon-calendar">
           {{ HumanTimeRange }}
@@ -160,7 +161,23 @@
             </a>
           </span>
         </span>
-        {{ /Categories }}
+        {{ /Categories }} {{ #AICategories }}
+        <span class="ai-category-pill">
+          {{ . }}
+          <span class="float-right mb-1">
+            <a
+              href="#"
+              hx-post="/events/{{ ID }}/category-add/{{ . }}"
+              hx-trigger="click"
+              hx-target="#notifications-catch"
+              hx-target-error="#notifications-catch"
+              mustache-template="notification-template"
+              class="icon-baseline icon-after icon-solid icon-square-plus ml-1 cursor-pointer"
+            >
+            </a>
+          </span>
+        </span>
+        {{ /AICategories }}
         <input
           type="text"
           name="category"
@@ -196,6 +213,7 @@
           <li>Description: {{ Event.Description }}</li>
           <li>Time: {{ TimeRange }}</li>
           <li>Categories: {{ Categories }}</li>
+          <li>AI Categories: {{ AICategories }}</li>
         </ul>
 
         <ul>
