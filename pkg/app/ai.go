@@ -48,9 +48,8 @@ func (e *Event) AutoTags(cats []string) ([]string, error) {
 	req := &api.GenerateRequest{
 		Model: "mistral",
 		System: `You will be provided with details for an event. The event details will be formatted as "key: value". Classify the event with any of the existing tags, if any are relevant.
-Suggest addiditional new tags if possible in Dutch.
-Provide your output in pure json format with the following keys: tags and new_tags.
-Skip tags already assigned.
+Suggest additional new tags if no existing tags are relevant.
+Provide only json output with the following keys: tags and new_tags. Don't add any comments or other text to the json.
 
 Existing tags:
 ` + strings.Join(cats, "\n"),
