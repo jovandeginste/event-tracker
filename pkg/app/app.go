@@ -3,6 +3,7 @@ package app
 import (
 	"io/fs"
 	"log/slog"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -49,5 +50,28 @@ func (a *App) Initialize() error {
 func (a *App) Serve() error {
 	a.logger.Info("Starting web server on " + a.Config.Bind)
 
+	go a.backgroundTasks()
+
 	return a.echo.Start(a.Config.Bind)
+}
+
+func (a *App) backgroundTasks() {
+	for {
+		a.logger.Info("Running background tasks")
+
+		e, err := a.AllEvents()
+		if err != nil {
+			a.logger.Error("Failed to fetch events: " + err.Error())
+			continue
+		}
+
+		for _, ev := range e {
+			if err := a.AddAITags(ev); err != nil {
+				a.logger.Error("Failed to add tags to event: " + err.Error())
+				continue
+			}
+		}
+
+		time.Sleep(5 * time.Minute)
+	}
 }

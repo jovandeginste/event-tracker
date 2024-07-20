@@ -104,12 +104,6 @@ func (a *App) AllEvents() (Events, error) {
 
 	e.CalculateAttributes()
 
-	for _, ev := range e {
-		if err := a.AddAITags(ev); err != nil {
-			return e, err
-		}
-	}
-
 	return e, nil
 }
 
