@@ -26,6 +26,7 @@ type App struct {
 	echo      *echo.Echo
 	logger    *slog.Logger
 	rawLogger *slog.Logger
+	working   bool
 }
 
 func NewApp(version Version) *App {
@@ -56,6 +57,15 @@ func (a *App) Serve() error {
 }
 
 func (a *App) backgroundTasks() {
+	if a.working {
+		return
+	}
+
+	a.working = true
+	defer func() {
+		a.working = false
+	}()
+
 	for {
 		a.logger.Info("Running background tasks")
 

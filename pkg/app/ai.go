@@ -47,9 +47,10 @@ func (a *App) AutoTags(e *Event) ([]string, error) {
 		e.Location(), strings.Join(e.Categories, ", "),
 	)
 
-	p := `You will be provided with details for all existing events, and one new event, all divided with ` + div + `. The event details will be formatted as "key: value". Classify the new event with any tags from the previous events, if any are relevant.
-Suggest additional new tags if no existing tags are relevant.
-Use the same language as the event summary and description.
+	p := `You will be provided with details for all existing events, and one new event, all divided with ` + div + `. The event details will be formatted as "key: value".
+Classify the new event with any relevant tags from the other events.
+Suggest two additional new tags.
+Use the same language as the event's summary and description.
 Provide only json output with the following keys: tags and new_tags. Don't add any comments or other text to the output.
 
 Existing events:
