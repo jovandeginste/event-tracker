@@ -33,6 +33,9 @@ func (a *App) AddAITags(e *Event) error {
 	}
 
 	e.AICategories = at
+	if len(at) == 0 {
+		e.AICategories = []string{"uncategorized"}
+	}
 
 	return a.UpdateEvent(e)
 }
