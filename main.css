@@ -193,7 +193,7 @@
   }
 
   .pill {
-    @apply inline-block rounded-full mx-1 min-w-[150px] py-1 px-5 border text-center;
+    @apply inline-block rounded-full mx-1 min-w-[150px] px-5 border text-center;
     @apply hover:brightness-110;
   }
   .category-pill {
