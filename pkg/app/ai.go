@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"slices"
 	"strings"
 
@@ -24,11 +23,7 @@ Existing events:
 )
 
 func (a *App) AddAITags(e *Event) error {
-	a.logger.Info("Adding tags to event: " + e.Summary)
-	a.logger.Info("Current tags:" + strings.Join(e.AICategories, ", "))
-
 	if len(e.AICategories) > 0 {
-		a.logger.Info("skipping.")
 		return nil
 	}
 
@@ -51,7 +46,7 @@ func (e *Event) AIFormat() string {
 }
 
 func (a *App) AutoTags(e *Event) ([]string, error) {
-	log.Print("Generating categories for: ", e.Summary)
+	a.logger.Info("Generating categories for: " + e.Summary)
 
 	client, err := api.ClientFromEnvironment()
 	if err != nil {
@@ -86,7 +81,7 @@ func (a *App) AutoTags(e *Event) ([]string, error) {
 	}
 
 	respFunc := func(resp api.GenerateResponse) error {
-		log.Print("Response: ", resp.Response)
+		a.logger.Info("Response: " + resp.Response)
 
 		return json.Unmarshal([]byte(resp.Response), &res)
 	}
