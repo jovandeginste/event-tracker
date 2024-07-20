@@ -46,6 +46,7 @@ func (a *App) configureRoutes() {
 	eventsGroup.POST("/:id/category-add/:category", a.AddCategoryHandler).Name = "event-category-add"
 	eventsGroup.POST("/:id/category-add", a.AddCategoryHandler).Name = "event-category-add-form"
 	eventsGroup.POST("/:id/category-rm/:category", a.RemoveCategoryHandler).Name = "event-category-rm"
+	eventsGroup.POST("/:id/category-ai", a.ResetAICategoryHandler).Name = "event-category-reset-ai"
 
 	a.echo = e
 }

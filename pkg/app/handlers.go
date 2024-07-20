@@ -210,6 +210,44 @@ func (a *App) AddCategoryHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
+func (a *App) ResetAICategoryHandler(c echo.Context) error {
+	var (
+		resp  APIResponse
+		event *Event
+	)
+
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		resp.AddError(err)
+	}
+
+	if resp.NoErrors() {
+		event, err = a.GetEvent(uint(id))
+		if err != nil {
+			resp.AddError(err)
+		}
+
+		event.AICategories = nil
+	}
+
+	if resp.NoErrors() {
+		if err := a.UpdateEvent(event); err != nil {
+			resp.AddError(err)
+		}
+	}
+
+	if resp.NoErrors() {
+		resp.Results = event
+		resp.AddNotification(fmt.Sprintf("Reset AI categories from event '%s'", event.Summary))
+	}
+
+	resp.ParseErrors()
+
+	c.Response().Header().Set("HX-Trigger", "events-updated")
+
+	return c.JSON(http.StatusOK, resp)
+}
+
 func (a *App) RemoveCategoryHandler(c echo.Context) error {
 	var (
 		resp  APIResponse

@@ -1736,6 +1736,14 @@ table {
   vertical-align: baseline !important;
 }
 
+.icon-arrows-rotate::before {
+  content: "\f021";
+}
+
+.icon-arrows-rotate::after {
+  content: "\f021";
+}
+
 .icon-calendar::before {
   content: "\f133";
 }
