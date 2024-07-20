@@ -24,7 +24,11 @@ Existing events:
 )
 
 func (a *App) AddAITags(e *Event) error {
+	a.logger.Info("Adding tags to event: " + e.Summary)
+	a.logger.Info("Current tags:" + strings.Join(e.AICategories, ", "))
+
 	if len(e.AICategories) > 0 {
+		a.logger.Info("skipping.")
 		return nil
 	}
 
