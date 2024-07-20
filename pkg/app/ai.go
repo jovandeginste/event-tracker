@@ -11,6 +11,18 @@ import (
 	"github.com/ollama/ollama/api"
 )
 
+const (
+	AIDiv    = "####"
+	AIPrompt = `You will be provided with details for all existing events, and one new event, all divided with ` + AIDiv + `. The event details will be formatted as "key: value".
+Classify the new event with any relevant tags from the other events.
+Suggest two additional new tags.
+Use the same language as the event's summary and description.
+Provide only json output with the following keys: tags and new_tags. Don't add any comments or other text to the output.
+
+Existing events:
+`
+)
+
 func (a *App) AddAITags(e *Event) error {
 	if len(e.AICategories) > 0 {
 		return nil
@@ -26,6 +38,14 @@ func (a *App) AddAITags(e *Event) error {
 	return a.UpdateEvent(e)
 }
 
+func (e *Event) AIFormat() string {
+	return fmt.Sprintf(
+		AIDiv+"\nNew event:\nSummary: %s\nDescription: %s\nLocation: %s\nTags: %s\n"+AIDiv,
+		e.Summary, e.Description(),
+		e.Location(), strings.Join(e.Categories, ", "),
+	)
+}
+
 func (a *App) AutoTags(e *Event) ([]string, error) {
 	log.Print("Generating categories for: ", e.Summary)
 
@@ -39,29 +59,13 @@ func (a *App) AutoTags(e *Event) ([]string, error) {
 		return nil, err
 	}
 
-	div := "####"
 	noStream := false
-	c := fmt.Sprintf(
-		div+"\nNew event:\nSummary: %s\nDescription: %s\nLocation: %s\nTags: %s\n"+div,
-		e.Summary, e.Description(),
-		e.Location(), strings.Join(e.Categories, ", "),
-	)
+	c := e.AIFormat()
 
-	p := `You will be provided with details for all existing events, and one new event, all divided with ` + div + `. The event details will be formatted as "key: value".
-Classify the new event with any relevant tags from the other events.
-Suggest two additional new tags.
-Use the same language as the event's summary and description.
-Provide only json output with the following keys: tags and new_tags. Don't add any comments or other text to the output.
-
-Existing events:
-`
+	p := AIPrompt
 
 	for _, ev := range evs {
-		p += fmt.Sprintf(
-			div+"\nSummary: %s\nDescription: %s\nLocation: %s\nTags: %s\n",
-			ev.Summary, ev.Description(),
-			ev.Location(), strings.Join(ev.Categories, ", "),
-		)
+		p += ev.AIFormat()
 	}
 
 	// By default, GenerateRequest is streaming.
