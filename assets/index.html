@@ -170,20 +170,6 @@
           {{ /Categories }}
         </span>
         <span>
-          <input
-            class="py-1"
-            type="text"
-            name="category"
-            size="10"
-            placeholder="new category"
-            hx-post="/events/{{ ID }}/category-add"
-            hx-trigger="keyup[keyCode==13]"
-            hx-target="#notifications-catch"
-            hx-target-error="#notifications-catch"
-            mustache-template="notification-template"
-          />
-        </span>
-        <span class="hidden hideable">
           {{ #AICategories }}
           <span class="ai-category-pill">
             {{ . }}
@@ -201,6 +187,20 @@
             </span>
           </span>
           {{ /AICategories }}
+        </span>
+        <span>
+          <input
+            class="py-1"
+            type="text"
+            name="category"
+            size="10"
+            placeholder="new category"
+            hx-post="/events/{{ ID }}/category-add"
+            hx-trigger="keyup[keyCode==13]"
+            hx-target="#notifications-catch"
+            hx-target-error="#notifications-catch"
+            mustache-template="notification-template"
+          />
         </span>
         <span class="hidden hideable">
           {{ #OtherCategories }}
