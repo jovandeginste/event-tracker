@@ -990,16 +990,14 @@ table {
     th {
     padding: 0.5rem;
   }
+  td,
+    th {
+    vertical-align: text-top;
+  }
   @media print {
     td,
     th {
       padding: 0px;
-    }
-  }
-  td,
-    th {
-    label {
-      vertical-align: top;
     }
   }
   th {
@@ -1092,6 +1090,30 @@ table {
   border-color: rgb(234 179 8 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(202 138 4 / var(--tw-bg-opacity));
+}
+
+.other-category-pill {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  display: inline-block;
+  min-width: 150px;
+  border-radius: 9999px;
+  border-width: 1px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  text-align: center;
+}
+
+.other-category-pill:hover {
+  --tw-brightness: brightness(1.1);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.other-category-pill {
+  --tw-border-opacity: 1;
+  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(82 82 82 / var(--tw-bg-opacity));
 }
 
 #drop_zone {
@@ -1404,6 +1426,11 @@ table {
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .font-mono {
@@ -1746,6 +1773,14 @@ table {
 
 .icon-calendar::after {
   content: "\f133";
+}
+
+.icon-chevron-right::before {
+  content: "\f054";
+}
+
+.icon-chevron-right::after {
+  content: "\f054";
 }
 
 .icon-download::before {

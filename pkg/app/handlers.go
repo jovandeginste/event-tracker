@@ -4,6 +4,7 @@ import (
 	"cmp"
 	"fmt"
 	"net/http"
+	"slices"
 	"strconv"
 	"time"
 
@@ -24,11 +25,34 @@ func (a *App) SearchEventsHandler(c echo.Context) error {
 		resp.AddError(err)
 	}
 
+	cats, err := a.AllCategories()
+	if err != nil {
+		resp.AddError(err)
+	}
+
+	for _, e := range events {
+		addOtherCategories(e, cats)
+	}
+
 	resp.Results = events
 
 	resp.ParseErrors()
 
 	return c.JSON(http.StatusOK, resp)
+}
+
+func addOtherCategories(e *Event, cats []string) {
+	for _, c := range cats {
+		if slices.Contains(e.Categories, c) {
+			continue
+		}
+
+		if slices.Contains(e.AICategories, c) {
+			continue
+		}
+
+		e.OtherCategories = append(e.OtherCategories, c)
+	}
 }
 
 func (a *App) EventsHandler(c echo.Context) error {

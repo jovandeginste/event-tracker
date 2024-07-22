@@ -141,54 +141,86 @@
         </span>
       </td>
       <td>
-        {{ #Categories }}
-        <span class="category-pill">
-          {{ . }}
-          <span class="float-right mb-1">
-            <a
-              href="/feed/calendar?categories={{ . }}"
-              class="icon-baseline icon-after icon-solid icon-calendar ml-1"
-            ></a>
-            <a
-              href="#"
-              hx-post="/events/{{ ID }}/category-rm/{{ . }}"
-              hx-trigger="click"
-              hx-target="#notifications-catch"
-              hx-target-error="#notifications-catch"
-              mustache-template="notification-template"
-              class="icon-baseline icon-after icon-solid icon-square-xmark ml-1 cursor-pointer"
-            >
-            </a>
+        <span
+          href="#"
+          class="icon-baseline icon-before icon-solid icon-chevron-right cursor-pointer"
+          onclick="toggleAll(this.parentElement, 'hideable', 'hidden');"
+        ></span>
+        <span>
+          {{ #Categories }}
+          <span class="category-pill">
+            {{ . }}
+            <span class="float-right mb-1">
+              <a
+                href="/feed/calendar?categories={{ . }}"
+                class="icon-baseline icon-after icon-solid icon-calendar ml-1"
+              ></a>
+              <a
+                href="#"
+                hx-post="/events/{{ ID }}/category-rm/{{ . }}"
+                hx-trigger="click"
+                hx-target="#notifications-catch"
+                hx-target-error="#notifications-catch"
+                mustache-template="notification-template"
+                class="icon-baseline icon-after icon-solid icon-square-xmark ml-1 cursor-pointer"
+              >
+              </a>
+            </span>
           </span>
+          {{ /Categories }}
         </span>
-        {{ /Categories }} {{ #AICategories }}
-        <span class="ai-category-pill">
-          {{ . }}
-          <span class="float-right mb-1">
-            <a
-              href="#"
-              hx-post="/events/{{ ID }}/category-add/{{ . }}"
-              hx-trigger="click"
-              hx-target="#notifications-catch"
-              hx-target-error="#notifications-catch"
-              mustache-template="notification-template"
-              class="icon-baseline icon-after icon-solid icon-square-plus ml-1 cursor-pointer"
-            >
-            </a>
+        <span>
+          <input
+            class="py-1"
+            type="text"
+            name="category"
+            size="10"
+            placeholder="new category"
+            hx-post="/events/{{ ID }}/category-add"
+            hx-trigger="keyup[keyCode==13]"
+            hx-target="#notifications-catch"
+            hx-target-error="#notifications-catch"
+            mustache-template="notification-template"
+          />
+        </span>
+        <span class="hidden hideable">
+          {{ #AICategories }}
+          <span class="ai-category-pill">
+            {{ . }}
+            <span class="float-right mb-1">
+              <a
+                href="#"
+                hx-post="/events/{{ ID }}/category-add/{{ . }}"
+                hx-trigger="click"
+                hx-target="#notifications-catch"
+                hx-target-error="#notifications-catch"
+                mustache-template="notification-template"
+                class="icon-baseline icon-after icon-solid icon-square-plus ml-1 cursor-pointer"
+              >
+              </a>
+            </span>
           </span>
+          {{ /AICategories }}
         </span>
-        {{ /AICategories }}
-        <input
-          type="text"
-          name="category"
-          size="10"
-          placeholder="new category"
-          hx-post="/events/{{ ID }}/category-add"
-          hx-trigger="keyup[keyCode==13]"
-          hx-target="#notifications-catch"
-          hx-target-error="#notifications-catch"
-          mustache-template="notification-template"
-        />
+        <span class="hidden hideable">
+          {{ #OtherCategories }}
+          <span class="other-category-pill">
+            {{ . }}
+            <span class="float-right mb-1">
+              <a
+                href="#"
+                hx-post="/events/{{ ID }}/category-add/{{ . }}"
+                hx-trigger="click"
+                hx-target="#notifications-catch"
+                hx-target-error="#notifications-catch"
+                mustache-template="notification-template"
+                class="icon-baseline icon-after icon-solid icon-square-plus ml-1 cursor-pointer"
+              >
+              </a>
+            </span>
+          </span>
+          {{ /OtherCategories }}
+        </span>
       </td>
       <td>
         <a

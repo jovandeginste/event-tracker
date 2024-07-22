@@ -72,7 +72,7 @@ func (a *App) AutoTags(e *Event) ([]string, error) {
 
 	// By default, GenerateRequest is streaming.
 	req := &api.GenerateRequest{
-		Model:  "mistral",
+		Model:  "llama3:latest",
 		System: p,
 		Prompt: c,
 		Stream: &noStream,

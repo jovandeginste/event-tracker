@@ -165,10 +165,7 @@
     }
     td,
     th {
-      @apply p-2 print:p-0;
-      label {
-        @apply align-top;
-      }
+      @apply p-2 print:p-0 align-text-top;
     }
     th {
       @apply text-zinc-700;
@@ -203,6 +200,10 @@
   .ai-category-pill {
     @apply pill;
     @apply bg-yellow-600 border-yellow-500;
+  }
+  .other-category-pill {
+    @apply pill;
+    @apply bg-neutral-600 border-neutral-500;
   }
   .selectable-pill {
     @apply pill;

@@ -16,12 +16,13 @@ const categoryProperty = "CATEGORIES"
 
 type Event struct {
 	gorm.Model
-	Summary      string      `gorm:"not null;uniqueIndex:idx_event"`
-	Start        time.Time   `gorm:"not null;uniqueIndex:idx_event"`
-	End          time.Time   `gorm:"not null;uniqueIndex:idx_event"`
-	Categories   []string    `gorm:"serializer:json"`
-	AICategories []string    `gorm:"serializer:json"`
-	Event        parse.Event `gorm:"serializer:json"`
+	Summary         string      `gorm:"not null;uniqueIndex:idx_event"`
+	Start           time.Time   `gorm:"not null;uniqueIndex:idx_event"`
+	End             time.Time   `gorm:"not null;uniqueIndex:idx_event"`
+	Categories      []string    `gorm:"serializer:json"`
+	AICategories    []string    `gorm:"serializer:json"`
+	OtherCategories []string    `gorm:"-"`
+	Event           parse.Event `gorm:"serializer:json"`
 
 	HumanStart     string `gorm:"-"`
 	HumanEnd       string `gorm:"-"`

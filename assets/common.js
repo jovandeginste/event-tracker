@@ -1,3 +1,15 @@
+function toggleAll(el, class1, class2) {
+  elem = el.firstChild;
+
+  do {
+    if (elem.nodeType === 3) continue; // text node
+    if (!elem.classList.contains(class1)) continue;
+    elem.classList.toggle(class2);
+  } while ((elem = elem.nextSibling));
+
+  false;
+}
+
 async function delay(duration) {
   return new Promise((resolve) => {
     setTimeout(resolve, duration);
